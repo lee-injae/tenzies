@@ -7,6 +7,10 @@ body {
   margin: 0;
   background-color: #0B2434;
   padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
   font-family: 'Karla', sans-serif;
 }
 
@@ -38,7 +42,7 @@ main {
   display: grid;
   grid-template: auto auto / repeat(5, 1fr);
   gap: 20px;
-  margin-bottom: 40px;
+  margin-bottom: 20px;
 }
 
 .die-face {
@@ -54,6 +58,10 @@ main {
 
 .die-num {
   font-size: 2rem;
+}
+
+.rollsntime {
+  margin-bottom: 20px;
 }
 
 .roll-dice {
@@ -74,4 +82,12 @@ main {
 
 .roll-dice:active {
   box-shadow: inset 5px 5px 10px -3px rgba(0, 0, 0, 0.7);
+}
+
+.green-font {
+  color: green;
+}
+
+.bold-text {
+  font-weight: bold;
 }
