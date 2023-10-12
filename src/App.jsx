@@ -1,10 +1,9 @@
 import React from 'react'
-import Die from "./components/Die"
+import Die from "./components/Die/Die"
 import {nanoid} from "nanoid"
 import Confetti from "react-confetti"
 
 import './App.css'
-
 
 // track the numer of rolls, 
 // track the time it took to win, 
@@ -102,7 +101,9 @@ function App() {
       </div>
       <p className='rollsntime'> 
         # of rolls: <span className='green-font bold-text'> {count} </span>  &nbsp; &nbsp; 
-        Time: {minutes} : {seconds} </p>
+        Time: {minutes} : {seconds} &nbsp; &nbsp;
+        My best time:   
+      </p>
       <button 
         className="roll-dice" 
         onClick={rollDice}
