@@ -16,6 +16,7 @@ function App() {
   const [count, setCount] = React.useState(0)
   const [time, setTime] = React.useState(0)
   const [isTimeRunning, setIsTimeRunning] = React.useState(true)
+  const [myBestTime, setMyBestTime] = React.useState(0)
 
   React.useEffect(() => {
     let intervalId
@@ -65,12 +66,17 @@ function App() {
           }))
           setCount(prevCount => prevCount + 1)
       } else {
+          checkMyBestTime()
           setTenzies(false)
           setCount(0)
           setDice(allNewDice())
           setTime(0)
           setIsTimeRunning(prevState => !prevState)
       }
+  }
+
+  function checkMyBestTime(){
+    console.log("my best")
   }
   
   function holdDice(id) {
