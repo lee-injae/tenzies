@@ -29,8 +29,8 @@ function App() {
     return () => clearInterval(intervalId)
   }, [time, isTimeRunning])
 
-  const minutes = Math.floor(time % 360000 / 6000).toString().padStart(2, "0")
-  const seconds = Math.floor((time%6000) / 100).toString().padStart(2, "0")
+  const minutes = Math.floor( (time % 360000) / 6000).toString().padStart(2, "0")
+  const seconds = Math.floor( (time % 6000) / 100).toString().padStart(2, "0")
  
   React.useEffect(() => {
       const allHeld = dice.every(die => die.isHeld)
@@ -77,7 +77,13 @@ function App() {
 
   function checkMyBestTime(){
     console.log("my best")
+    if (myBestTime > time) {
+      setMyBestTime(time)
+    } 
   }
+
+  const myBestMinutes = Math.floor( (myBestTime % 360000) / 6000).toString().padStart(2, "0")
+  const myBestSeconds = Math.floor( (myBestTime % 6000) / 100).toString().padStart(2, "0")
   
   function holdDice(id) {
       setDice(oldDice => oldDice.map(die => {
@@ -107,8 +113,8 @@ function App() {
       </div>
       <p className='rollsntime'> 
         # of rolls: <span className='green-font bold-text'> {count} </span>  &nbsp; &nbsp; 
-        Time: {minutes} : {seconds} &nbsp; &nbsp;
-        My best time:   
+        <span> Time: {minutes} : {seconds} </span> &nbsp; &nbsp;
+         My best time: <span className='red-font'> {myBestMinutes} : {myBestSeconds} </span>   
       </p>
       <button 
         className="roll-dice" 

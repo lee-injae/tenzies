@@ -38,6 +38,10 @@ main {
   text-align: center;
 }
 
+.mybesttime {
+
+}
+
 .dice-container {
   display: grid;
   grid-template: auto auto / repeat(5, 1fr);
@@ -86,6 +90,10 @@ main {
 
 .green-font {
   color: green;
+}
+
+.red-font {
+  color: red
 }
 
 .bold-text {
