@@ -1,7 +1,9 @@
 import React from 'react'
 import Die from "./components/Die/Die"
+import Button from "./components/Button/Button"
 import {nanoid} from "nanoid"
 import Confetti from "react-confetti"
+
 
 import './App.css'
 
@@ -91,7 +93,6 @@ function App() {
   }
 
   function checkMyBestTime(){
-    console.log("my best")
     if (myBestTime > time) {
       setMyBestTime(time)
     } 
@@ -132,6 +133,7 @@ function App() {
         <span> Time: {minutes} : {seconds} </span> &nbsp; &nbsp;
          My best time: <span className='red-font'> {disPlayBestTime} </span>   
       </p>
+      <Button> adsf</Button>
       <button 
         className="roll-dice" 
         onClick={rollDice}

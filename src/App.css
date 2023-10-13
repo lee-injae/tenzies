@@ -46,7 +46,7 @@ main {
   display: grid;
   grid-template: auto auto / repeat(5, 1fr);
   gap: 20px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 .die-face {
