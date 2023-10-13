@@ -18,6 +18,15 @@ function App() {
   const [isTimeRunning, setIsTimeRunning] = React.useState(true)
   const [myBestTime, setMyBestTime] = React.useState(0)
 
+  React.useState(() => {
+    const savedBestTime = localStorage.getItem("myBestTime")
+    if (savedBestTime) {
+      setMyBestTime(Number(savedBestTime))
+    } else {
+      setMyBestTime(999999)
+    }
+  }, [])
+
   React.useEffect(() => {
     let intervalId
     if (isTimeRunning){
@@ -40,6 +49,12 @@ function App() {
           setTenzies(true)
       }
   }, [dice])
+
+  React.useEffect(() => {
+    if (myBestTime > 0){
+      localStorage.setItem("myBestTime", myBestTime.toString())
+    }
+  }, [myBestTime])
 
   function generateNewDie() {
       return {
@@ -84,7 +99,8 @@ function App() {
 
   const myBestMinutes = Math.floor( (myBestTime % 360000) / 6000).toString().padStart(2, "0")
   const myBestSeconds = Math.floor( (myBestTime % 6000) / 100).toString().padStart(2, "0")
-  
+  const disPlayBestTime = myBestTime === 999999 ? "N / A" : `${myBestMinutes} : ${myBestSeconds}`
+
   function holdDice(id) {
       setDice(oldDice => oldDice.map(die => {
           return die.id === id ? 
@@ -114,7 +130,7 @@ function App() {
       <p className='rollsntime'> 
         # of rolls: <span className='green-font bold-text'> {count} </span>  &nbsp; &nbsp; 
         <span> Time: {minutes} : {seconds} </span> &nbsp; &nbsp;
-         My best time: <span className='red-font'> {myBestMinutes} : {myBestSeconds} </span>   
+         My best time: <span className='red-font'> {disPlayBestTime} </span>   
       </p>
       <button 
         className="roll-dice" 
