@@ -17,10 +17,12 @@ function App() {
   const [tenzies, setTenzies] = React.useState(false)
   const [count, setCount] = React.useState(0)
   const [time, setTime] = React.useState(0)
-  const [isTimeRunning, setIsTimeRunning] = React.useState(true)
-  const [myBestTime, setMyBestTime] = React.useState(0)
+  const [isTimeRunning, setIsTimeRunning] = React.useState(false)
+  const [myBestTime, setMyBestTime] = React.useState(999999)
 
-  React.useState(() => {
+  const [achievedNewBest, setAchievedNewBest] = React.useState(false)
+  
+  React.useEffect(() => {
     const savedBestTime = localStorage.getItem("myBestTime")
     if (savedBestTime) {
       setMyBestTime(Number(savedBestTime))
@@ -58,6 +60,26 @@ function App() {
     }
   }, [myBestTime])
 
+  React.useEffect(() => {
+    console.log("Effect running. Tenzies:", tenzies, "Time:", time, "MyBestTime:", myBestTime);
+
+    if (tenzies) {
+      if(myBestTime > time) {
+        console.log("Setting new best time and achievedNewBest to true");
+        setMyBestTime(time)
+        setAchievedNewBest(true)
+      } else {
+        console.log("No new best time achieved");
+        // setAchievedNewBest(false)
+      }
+      // setCount(0)
+      // setTime(0)
+      // setTenzies(false)
+      
+      // setDice(allNewDice())
+    }
+  }, [tenzies])
+
   function generateNewDie() {
       return {
           value: Math.ceil(Math.random() * 6),
@@ -75,39 +97,58 @@ function App() {
   }
   
   function rollDice() {
-      if(!tenzies) {
+    console.log("rollDice called");
+      if(!tenzies && isTimeRunning) {
           setDice(oldDice => oldDice.map(die => {
               return die.isHeld ? 
                   die :
                   generateNewDie()
           }))
           setCount(prevCount => prevCount + 1)
-      } else {
-          checkMyBestTime()
-          setTenzies(false)
+      } else if (tenzies) {
+          // checkMyBestTime()
           setCount(0)
-          setDice(allNewDice())
           setTime(0)
-          setIsTimeRunning(prevState => !prevState)
+          setTenzies(false)
+          setDice(allNewDice())
+          // setIsTimeRunning(prevState => !prevState)
       }
+
   }
 
-  function checkMyBestTime(){
-    if (myBestTime > time) {
-      setMyBestTime(time)
-    } 
-  }
+  // function checkMyBestTime(){
+  //   if (myBestTime > time) {
+  //     setMyBestTime(time)
+  //     setAchievedNewBest(true)
+  //   } else {
+  //     setAchievedNewBest(false)
+  //   }
+  // }
+
+  // console.log(isTimeRunning)
 
   const myBestMinutes = Math.floor( (myBestTime % 360000) / 6000).toString().padStart(2, "0")
   const myBestSeconds = Math.floor( (myBestTime % 6000) / 100).toString().padStart(2, "0")
   const disPlayBestTime = myBestTime === 999999 ? "N / A" : `${myBestMinutes} : ${myBestSeconds}`
 
   function holdDice(id) {
-      setDice(oldDice => oldDice.map(die => {
-          return die.id === id ? 
-              {...die, isHeld: !die.isHeld} :
-              die
+      if (time != 0){
+        setDice(oldDice => oldDice.map(die => {
+            return die.id === id ? 
+                {...die, isHeld: !die.isHeld} :
+                die
       }))
+    }
+  }
+
+  function startGame(){
+    // if (tenzies) {
+      console.log("start game")
+      
+      setIsTimeRunning(true)
+      setAchievedNewBest(false)
+    // }
+    
   }
 
   const diceElements = dice.map(die => (
@@ -121,7 +162,7 @@ function App() {
 
   return (
     <main>
-      {tenzies && <Confetti />}
+      { tenzies && achievedNewBest && <Confetti />}
       <h1 className="title">Tenzies</h1>
       <p className="instructions">Roll until all dice are the same. 
         Click each die to freeze it at its current value between rolls.</p>
@@ -133,12 +174,16 @@ function App() {
         <span> Time: {minutes} : {seconds} </span> &nbsp; &nbsp;
          My best time: <span className='red-font'> {disPlayBestTime} </span>   
       </p>
-      <Button> adsf</Button>
+      { (!isTimeRunning && !tenzies) && <Button
+        onClick={startGame}
+      >
+        Start
+      </Button>}
       <button 
         className="roll-dice" 
         onClick={rollDice}
       >
-        {tenzies ? "New Game" : "Roll"}
+        {tenzies ? "Back to main" : "Roll"}
       </button>
 </main>
   )
