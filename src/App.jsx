@@ -4,26 +4,20 @@ import Button from "./components/Button/Button"
 import {nanoid} from "nanoid"
 import Confetti from "react-confetti"
 
-
 import './App.css'
 
-// track the numer of rolls, 
-// track the time it took to win, 
-// save your best time to localStorage
-
 function App() {
-
+  const savedBestTime = localStorage.getItem("myBestTime")
+  const initialBestTime = savedBestTime ? Number(savedBestTime) : 999999
+  const [myBestTime, setMyBestTime] = React.useState(initialBestTime)
   const [dice, setDice] = React.useState(allNewDice())
   const [tenzies, setTenzies] = React.useState(false)
   const [count, setCount] = React.useState(0)
   const [time, setTime] = React.useState(0)
   const [isTimeRunning, setIsTimeRunning] = React.useState(false)
-  const [myBestTime, setMyBestTime] = React.useState(999999)
-
   const [achievedNewBest, setAchievedNewBest] = React.useState(false)
   
   React.useEffect(() => {
-    const savedBestTime = localStorage.getItem("myBestTime")
     if (savedBestTime) {
       setMyBestTime(Number(savedBestTime))
     } else {
@@ -61,22 +55,15 @@ function App() {
   }, [myBestTime])
 
   React.useEffect(() => {
-    console.log("Effect running. Tenzies:", tenzies, "Time:", time, "MyBestTime:", myBestTime);
-
     if (tenzies) {
       if(myBestTime > time) {
-        console.log("Setting new best time and achievedNewBest to true");
+        // console.log("Setting new best time and achievedNewBest to true");
         setMyBestTime(time)
         setAchievedNewBest(true)
       } else {
-        console.log("No new best time achieved");
-        // setAchievedNewBest(false)
+        // console.log("No new best time achieved");
+        setAchievedNewBest(false)
       }
-      // setCount(0)
-      // setTime(0)
-      // setTenzies(false)
-      
-      // setDice(allNewDice())
     }
   }, [tenzies])
 
@@ -97,7 +84,6 @@ function App() {
   }
   
   function rollDice() {
-    console.log("rollDice called");
       if(!tenzies && isTimeRunning) {
           setDice(oldDice => oldDice.map(die => {
               return die.isHeld ? 
@@ -106,26 +92,16 @@ function App() {
           }))
           setCount(prevCount => prevCount + 1)
       } else if (tenzies) {
-          // checkMyBestTime()
-          setCount(0)
-          setTime(0)
-          setTenzies(false)
-          setDice(allNewDice())
-          // setIsTimeRunning(prevState => !prevState)
+          resetGame()
       }
-
   }
 
-  // function checkMyBestTime(){
-  //   if (myBestTime > time) {
-  //     setMyBestTime(time)
-  //     setAchievedNewBest(true)
-  //   } else {
-  //     setAchievedNewBest(false)
-  //   }
-  // }
-
-  // console.log(isTimeRunning)
+  function resetGame(){
+    setCount(0)
+    setTime(0)
+    setTenzies(false)
+    setDice(allNewDice())
+  }
 
   const myBestMinutes = Math.floor( (myBestTime % 360000) / 6000).toString().padStart(2, "0")
   const myBestSeconds = Math.floor( (myBestTime % 6000) / 100).toString().padStart(2, "0")
@@ -142,13 +118,7 @@ function App() {
   }
 
   function startGame(){
-    // if (tenzies) {
-      console.log("start game")
-      
       setIsTimeRunning(true)
-      setAchievedNewBest(false)
-    // }
-    
   }
 
   const diceElements = dice.map(die => (
