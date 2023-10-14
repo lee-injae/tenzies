@@ -7,9 +7,7 @@ import Confetti from "react-confetti"
 import './App.css'
 
 function App() {
-  const savedBestTime = localStorage.getItem("myBestTime")
-  const initialBestTime = savedBestTime ? Number(savedBestTime) : 999999
-  const [myBestTime, setMyBestTime] = React.useState(initialBestTime)
+  const [myBestTime, setMyBestTime] = React.useState(null)
   const [dice, setDice] = React.useState(allNewDice())
   const [tenzies, setTenzies] = React.useState(false)
   const [count, setCount] = React.useState(0)
@@ -18,12 +16,9 @@ function App() {
   const [achievedNewBest, setAchievedNewBest] = React.useState(false)
   
   React.useEffect(() => {
-    if (savedBestTime) {
-      setMyBestTime(Number(savedBestTime))
-    } else {
-      setMyBestTime(999999)
-    }
-  }, [])
+    const savedBestTime = localStorage.getItem("myBestTime");
+    setMyBestTime(savedBestTime ? Number(savedBestTime) : 999999);
+  }, []);
 
   React.useEffect(() => {
     let intervalId
@@ -57,11 +52,9 @@ function App() {
   React.useEffect(() => {
     if (tenzies) {
       if(myBestTime > time) {
-        // console.log("Setting new best time and achievedNewBest to true");
         setMyBestTime(time)
         setAchievedNewBest(true)
       } else {
-        // console.log("No new best time achieved");
         setAchievedNewBest(false)
       }
     }
@@ -144,10 +137,11 @@ function App() {
         <span> Time: {minutes} : {seconds} </span> &nbsp; &nbsp;
          My best time: <span className='red-font'> {disPlayBestTime} </span>   
       </p>
-      { (!isTimeRunning && !tenzies) && <Button
+      { (!isTimeRunning && !tenzies) && 
+      <Button
         onClick={startGame}
       >
-        Start
+        S
       </Button>}
       <button 
         className="roll-dice" 

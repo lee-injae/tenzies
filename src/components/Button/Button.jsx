@@ -1,8 +1,10 @@
 import React from "react"
+import "./Button.css"
 
 export default function Button({ children, onClick }){
-    // console.log(onClick)
     return(
-        <button onClick={onClick}>{children}</button>
+        <button className="btn" onClick={onClick}>
+            {children}
+        </button>
     )
 }
