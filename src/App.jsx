@@ -133,7 +133,7 @@ function App() {
         {diceElements}
       </div>
       <p className='rollsntime'> 
-        # of rolls: <span className='green-font bold-text'> {count} </span>  &nbsp; &nbsp; 
+        # of rolls: <span className='green-font'> {count} </span>  &nbsp; &nbsp; 
         <span> Time: {minutes} : {seconds} </span> &nbsp; &nbsp;
          My best time: <span className='red-font'> {disPlayBestTime} </span>   
       </p>
@@ -141,7 +141,7 @@ function App() {
       <Button
         onClick={startGame}
       >
-        S
+        Start
       </Button>}
       <button 
         className="roll-dice" 

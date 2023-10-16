@@ -1,55 +1,30 @@
 .btn {
-    height: 40px;
-    width: 40px;
+    height: 50px;
+    width: 130px;
     border: none;
-    border-radius: 50%;
+    border-radius: 6px;
     background-color: #FF4742;
     color: #ffffff;
     font-size: 1.2rem;
     font-family: 'Karla', sans-serif;
     cursor: pointer;
+    margin: 1em 0;
 }
 
-.button:hover,
-.button:active,
-.button:focus {
-  background-color: initial;
+.btn:hover,
+.btn:active,
+.btn:focus {
+  background-color: #faf0e6;
   background-position: 0 0;
   color: #FF4742;
+  box-shadow: inset 5px 5px 10px -3px rgba(0, 0, 0, 0.7);
+  outline: none;
 }
 
-.button-24:active,
-.button:focus {
+.btn-24:active,
+.btn:focus {
   opacity: .5;
 }
 
 
-/* <!-- HTML !-->
-<button class="button-24" role="button">Button 24</button>
-
-/* CSS */
-/* .button-24 {
-  background: #FF4742;
-  border: 1px solid #FF4742;
-  border-radius: 6px;
-  box-shadow: rgba(0, 0, 0, 0.1) 1px 2px 4px;
-  box-sizing: border-box;
-  color: #FFFFFF;
-  cursor: pointer;
-  display: inline-block;
-  font-family: nunito,roboto,proxima-nova,"proxima nova",sans-serif;
-  font-size: 16px;
-  font-weight: 800;
-  line-height: 16px;
-  min-height: 40px;
-  outline: 0;
-  padding: 12px 14px;
-  text-align: center;
-  text-rendering: geometricprecision;
-  text-transform: none;
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
-  vertical-align: middle;
-}  */
 
